@@ -18,7 +18,7 @@
                                 <th>Phone</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
-                                <th>Action</th>
+                                <th class="no-sort">Action</th>
                             </tr>
                         </thead>
                     </table>
