@@ -1,3 +1,23 @@
+/* datatable */
+
 div.dataTables_wrapper div.dataTables_length select{
     color: #fff;
+}
+
+
+
+@media screen and (max-width: 767px){
+
+    /* datatable */
+
+    div.dataTables_wrapper div.dataTables_filter{
+        margin-top: 10px;
+    }
+
+    table.dataTable td, table.dataTable th{
+        width: 100%;
+    }
+    table.dataTable>tbody>tr.child ul.dtr-details>li{
+        border-bottom: 1px solid #494f58;
+    }
 }

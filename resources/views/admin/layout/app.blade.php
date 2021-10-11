@@ -62,9 +62,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="logo">
-                    <a class="navbar-brand" href="index.html"></a>
-                </div>
+
                 <div class="" id="headerNav">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
