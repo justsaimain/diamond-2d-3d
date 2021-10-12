@@ -1,14 +1,51 @@
 @extends('admin.layout.app')
-@section('title', 'Index')
+@section('title', 'Users')
 @section('nav-users', 'active-page')
 @section('content')
+    <div class="row mb-3">
+        <div class="col">
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createUserAccount">
+                Create User Account
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="createUserAccount" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="createUserAccountLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createUserAccountLabel">Create User Account</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" class="row g-3 needs-validation">
+                                <div class="col">
+                                    <label for="name" class="form-label">Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputGroupPrepend"><i
+                                                class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" id="name"
+                                            aria-describedby="inputGroupPrepend">
+                                        <div class="invalid-feedback">
+                                            Please choose a username.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3 mb-5">
+                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Zero Configuration</h5>
-                    <p>DataTables has most features enabled by default, so all you need to do to use it with your own tables
-                        is to call the construction function: <code>$().DataTable();</code>.</p>
+                    <h5 class="card-title">Users Database</h5>
                     <table id="dataTable" class="display" style="width:100%">
                         <thead>
                             <tr>
