@@ -8,6 +8,8 @@
     <meta name="description" content="2D 3D Admin">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="justsaimain">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
@@ -42,6 +44,7 @@
             <span class='sr-only'>Loading...</span>
         </div>
     </div>
+
 
     <div class="page-container">
         <div class="page-header">
@@ -214,27 +217,67 @@
     <script src="{{ asset('assets/plugins/jquery/jquery-3.4.1.min.js') }}"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="{{ asset('assets/plugins/perfectscroll/perfect-scrollbar.min.js') }}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/plugins/DataTables/datatables.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/main.min.js') }}"></script>
 
 
+
+
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            background: "#9C6EFC",
+            showCloseButton: true,
+            timer: 5000,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+
+
         $(function($) {
+
+
+            let token = document.head.querySelector('meta[name="csrf-token"]');
+
+            if (token) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': token.content
+                    }
+                });
+            } else {
+                console.log('Token not Found.');
+            }
+
             $.extend(true, $.fn.dataTable.defaults, {
                 mark: true,
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                language: {
-                    "paginate": {
-                        "previous": "<i class='far fa-arrow-alt-circle-left'></i>",
-                        "next": "<i class='far fa-arrow-alt-circle-right'></i>"
-                    },
-                },
             });
+
+            @if (session('create'))
+                Toast.fire({
+                title: '{{ session('create') }}'
+                });
+            @endif
+
+            @if (session('update'))
+                Toast.fire({
+                title: '{{ session('update') }}'
+                });
+            @endif
         })
     </script>
 

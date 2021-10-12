@@ -20,6 +20,19 @@ Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.logi
 Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->only(['index', 'show', 'store', 'destroy', 'update']);
     Route::get('users/datatable/ssd', [UserController::class, 'ssd']);
+});
+
+
+Route::get('/test', function () {
+    $words = preg_split('//', 'abcdefghijklmnopqrstuvwxyz0123456789', -1);
+    shuffle($words);
+    $code = '';
+    foreach ($words as $word) {
+        if (strlen($code) < 5) {
+            $code .= $word;
+        }
+    }
+    return $code;
 });

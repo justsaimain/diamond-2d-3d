@@ -4,7 +4,13 @@ div.dataTables_wrapper div.dataTables_length select{
     color: #fff;
 }
 
+.swal2-title{
+    color: #fff !important;
+}
 
+.swal2-styled.swal2-confirm{
+    border: none;
+}
 
 @media screen and (max-width: 767px){
 

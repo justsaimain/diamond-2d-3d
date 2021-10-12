@@ -18,21 +18,23 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="#" class="row g-3 needs-validation">
-                                <div class="col">
+                            <form action="{{ route('admin.users.store') }}" id="create-form" method="POST"
+                                class="row g-3">
+                                @csrf
+                                <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="inputGroupPrepend"><i
-                                                class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control" id="name"
-                                            aria-describedby="inputGroupPrepend">
-                                        <div class="invalid-feedback">
-                                            Please choose a username.
-                                        </div>
-                                    </div>
+                                    <input type="text" name="name" class="form-control" id="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control" id="phone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="text" name="password" class="form-control" id="password">
                                 </div>
                                 <div class="col-12 mt-3 mb-5">
-                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                    <button class="btn btn-primary" type="submit">Create</button>
                                 </div>
                             </form>
                         </div>
@@ -63,12 +65,47 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editUserLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm" method="POST" class="row g-3">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" id="edit-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control" id="edit-phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="text" name="password" class="form-control" id="edit-password">
+                        </div>
+                        <div class="col-12 mt-3 mb-5">
+                            <button class="btn btn-primary" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
+
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            var table = $('#dataTable').DataTable({
                 ajax: "/admin/users/datatable/ssd",
                 columns: [{
                     data: 'plus-icon',
@@ -117,6 +154,46 @@
                         "visible": false
                     }
                 ],
+            });
+
+            $(document).on('click', '.delete-btn', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+
+                Swal.fire({
+                    icon: 'error',
+                    text: "Are you sure you want to delete?",
+                    showDenyButton: true,
+                    confirmButtonColor: '#9C6EFC',
+                    focusConfirm: false,
+                    confirmButtonText: 'Yes, Delete',
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            method: "DELETE",
+                            url: `/admin/users/${id}`,
+                        }).done(function(res) {
+                            table.ajax.reload();
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
+            });
+
+            $(document).on('click', '.edit-btn', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var name = $(this).attr("data-name");
+                var phone = $(this).attr("data-phone");
+
+                $('#editUserForm').attr('action', '/admin/users/' + id);
+
+                $('#edit-name').val(name);
+                $('#edit-phone').val(phone);
+                var editModal = new bootstrap.Modal(document.getElementById('editUserModal'), 'backdrop');
+                editModal.show();
             });
         });
     </script>
