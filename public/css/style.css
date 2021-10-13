@@ -12,6 +12,17 @@ div.dataTables_wrapper div.dataTables_length select{
     border: none;
 }
 
+
+/* form */
+
+.form-switch .form-check-input{
+    width: 45px;
+    height: 23px;
+    margin-right: 10px;
+}
+
+
+
 @media screen and (max-width: 767px){
 
     /* datatable */

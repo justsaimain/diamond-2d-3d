@@ -5,7 +5,7 @@
     <div class="row mb-3">
         <div class="col">
             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createUserAccount">
-                Create User Account
+                Create user account
             </button>
 
             <!-- Modal -->

@@ -181,6 +181,9 @@
                 <li class="@yield('nav-users')">
                     <a href="{{ route('admin.users.index') }}"><i data-feather="users"></i>Users</a>
                 </li>
+                <li class="@yield('nav-2d')">
+                    <a href="{{ route('admin.two-d.index') }}"><i data-feather="hash"></i>2D Numbers</a>
+                </li>
                 <li class="sidebar-title">
                     Other
                 </li>

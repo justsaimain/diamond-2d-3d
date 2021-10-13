@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\TwoDController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,17 +23,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
 
     Route::resource('users', UserController::class)->only(['index', 'show', 'store', 'destroy', 'update']);
     Route::get('users/datatable/ssd', [UserController::class, 'ssd']);
-});
 
-
-Route::get('/test', function () {
-    $words = preg_split('//', 'abcdefghijklmnopqrstuvwxyz0123456789', -1);
-    shuffle($words);
-    $code = '';
-    foreach ($words as $word) {
-        if (strlen($code) < 5) {
-            $code .= $word;
-        }
-    }
-    return $code;
+    Route::resource('two-d', TwoDController::class);
+    Route::get('two-d/datatable/ssd', [TwoDController::class, 'ssd']);
 });
